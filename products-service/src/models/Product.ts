@@ -3,4 +3,5 @@ export interface Product {
     name: string
     description: string
     price: bigint
+    urlForUpload?: string
 }
