@@ -23,8 +23,8 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/lambda/createProduct.handler
     events:
       - http:
           method: get
-          path: hello
+          path: products
