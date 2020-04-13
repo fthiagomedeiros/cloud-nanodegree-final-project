@@ -1,7 +1,11 @@
 import * as AWS from "aws-sdk";
 import { Product } from "../models/Product";
 
-export class DynamoStorage {
+export interface Storage {
+    save(product: Product): Promise<Product>
+}
+
+export class DynamoStorage implements Storage {
 
     constructor(
         private readonly dynamo = createClient(),

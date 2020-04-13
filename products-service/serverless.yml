@@ -9,11 +9,24 @@ custom:
     webpackConfig: ./webpack.config.js
     includeModules: true
 
+  documentation:
+    api:
+      info:
+        version: 1.0.0
+        title: products-service
+        description: serverless service for products
+    models:
+      - name: CreateProductRequest
+        contentType: application/json
+        schema: ${file(validator/create-product-request.json)}
+
 
 plugins:
   - serverless-webpack
   - serverless-dynamodb-local
   - serverless-iam-roles-per-function
+  - serverless-aws-documentation
+  - serverless-reqvalidator-plugin
   - serverless-offline
 
 
@@ -45,7 +58,6 @@ provider:
         - dev
 
 
-
 functions:
   CreateProduct:
     handler: src/lambda/createProduct.handler
@@ -54,6 +66,12 @@ functions:
           method: post
           path: products
           cors: true
+          reqValidatorName: RequestBodyValidator
+          documentation:
+            summary: Create a new product
+            description: Create a new product
+            requestModels:
+              'application/json': CreateProductRequest
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -67,6 +85,15 @@ functions:
 
 resources:
   Resources:
+
+    RequestBodyValidator:
+      Type: AWS::ApiGateway::RequestValidator
+      Properties:
+        Name: 'request-body-validator'
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        ValidateRequestBody: true
+        ValidateRequestParameters: false
 
     ProductsDynamoDBTable:
       Type: AWS::DynamoDB::Table
