@@ -99,11 +99,15 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: companyId
+            AttributeType: S
+          - AttributeName: productId
             AttributeType: S
         KeySchema:
-          - AttributeName: id
+          - AttributeName: companyId
             KeyType: HASH
+          - AttributeName: productId
+            KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.PRODUCT_TABLE}
 

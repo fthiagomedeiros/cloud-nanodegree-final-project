@@ -9,7 +9,8 @@ export async function createProduct(
     createProductRequest: CreateProductRequest): Promise<Product> {
 
     return await productAccess.createProduct({
-        id: uuid.v4(),
+        companyId: "1001",
+        productId: uuid.v4(),
         name: createProductRequest.name,
         description: createProductRequest.description,
         price: createProductRequest.price
