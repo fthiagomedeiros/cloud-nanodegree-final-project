@@ -9,11 +9,12 @@ custom:
     webpackConfig: ./webpack.config.js
     includeModules: true
 
-# Add the serverless-webpack plugin
+
 plugins:
   - serverless-webpack
-  - serverless-offline
   - serverless-dynamodb-local
+  - serverless-iam-roles-per-function
+  - serverless-offline
 
 
 provider:
@@ -28,23 +29,48 @@ provider:
 
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    PRODUCT_TABLE: Products-${self:provider.stage}
 
   custom:
     serverless-offline:
-      port: 4000
+      port: 3003
 
     dynamodb:
-      stages:
-        - dev
       start:
         port: 8000
         inMemory: true
         migrate: true
+
+
 
 functions:
   hello:
     handler: src/lambda/createProduct.handler
     events:
       - http:
-          method: get
+          method: post
           path: products
+          cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: !GetAtt ProductsDynamoDBTable.Arn
+
+
+resources:
+  Resoures:
+
+    ProductsDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.PRODUCT_TABLE}
+
+
