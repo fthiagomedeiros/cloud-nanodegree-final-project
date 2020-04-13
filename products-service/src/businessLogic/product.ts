@@ -1,7 +1,7 @@
 import * as uuid from 'uuid'
-import {CreateProductRequest} from "../requests/CreateProductRequest";
-import {ProductAccess} from "../dataLayer/productsAccess";
-import {Product} from "../models/Product";
+import { CreateProductRequest } from "../requests/CreateProductRequest";
+import { ProductAccess } from "../dataLayer/productsAccess";
+import { Product } from "../models/Product";
 
 const productAccess = new ProductAccess();
 
