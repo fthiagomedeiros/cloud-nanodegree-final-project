@@ -40,11 +40,13 @@ provider:
         port: 8000
         inMemory: true
         migrate: true
+      stages:
+        - dev
 
 
 
 functions:
-  hello:
+  CreateProduct:
     handler: src/lambda/createProduct.handler
     events:
       - http:
@@ -59,7 +61,7 @@ functions:
 
 
 resources:
-  Resoures:
+  Resources:
 
     ProductsDynamoDBTable:
       Type: AWS::DynamoDB::Table

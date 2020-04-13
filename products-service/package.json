@@ -1,12 +1,10 @@
 {
   "name": "products-service",
   "version": "1.0.0",
-  "description": "Serverless webpack example using Typescript",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "Products Service",
   "dependencies": {
-    "source-map-support": "^0.5.10"
+    "source-map-support": "^0.5.10",
+    "uuid": "^7.0.3"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
