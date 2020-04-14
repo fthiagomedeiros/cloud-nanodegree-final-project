@@ -15,6 +15,17 @@ export class ProductAccess {
         return product
     }
 
+    async updateProduct(productId: string, product: Product): Promise<Product> {
+        console.log('update product ', productId, ' with data ', product );
+        await this.database.update(productId, product);
+        return product
+    }
+
+    async deleteProduct(productId: string) {
+        console.log('delete product ', productId);
+        await this.database.delete(productId);
+    }
+
 }
 
 
