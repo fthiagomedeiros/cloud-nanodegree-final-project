@@ -62,6 +62,10 @@ provider:
 
 
 functions:
+
+  Auth:
+    handler: src/auth/authProducts.handler
+
   CreateProduct:
     handler: src/lambda/createProduct.handler
     events:
@@ -69,6 +73,7 @@ functions:
           method: post
           path: products
           cors: true
+          authorizer: Auth
           reqValidatorName: RequestBodyValidator
           documentation:
             summary: Create a new product
@@ -92,6 +97,7 @@ functions:
           method: patch
           path: products/{productId}
           cors: true
+          authorizer: Auth
           reqValidatorName: RequestBodyValidator
           documentation:
             summary: Update a new product
@@ -115,6 +121,7 @@ functions:
           method: delete
           path: products/{productId}
           cors: true
+          authorizer: Auth
     iamRoleStatements:
       - Effect: Allow
         Action:
