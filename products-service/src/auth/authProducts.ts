@@ -25,40 +25,20 @@ export const handler: APIGatewayTokenAuthorizerHandler = async (event: APIGatewa
         };
     }
 
-    try {
-        // const decodedToken = await verifyToken(event.authorizationToken);
-        console.log("User authorized ", event);
-
-        return {
-            principalId: "decodedToken.sub",
-            policyDocument: {
-                Version: '2012-10-17',
-                Statement: [
-                    {
-                        Action: 'execute-api:Invoke',
-                        Effect: 'Allow',
-                        Resource: '*'
-                    }
-                ]
-            }
-        };
-    } catch (e) {
-        console.log('Unauthorized ', event);
-
-        return {
-            principalId: 'user',
-            policyDocument: {
-                Version: '2012-10-17',
-                Statement: [
-                    {
-                        Action: 'execute-api:Invoke',
-                        Effect: 'Deny',
-                        Resource: '*'
-                    }
-                ]
-            }
-        };
-    }
-
+    console.log("Event authorized ", event);
+    console.log("User authorized ", event.authorizationToken);
+    return {
+        principalId: "decodedToken.sub",
+        policyDocument: {
+            Version: '2012-10-17',
+            Statement: [
+                {
+                    Action: 'execute-api:Invoke',
+                    Effect: 'Allow',
+                    Resource: '*'
+                }
+            ]
+        }
+    };
 
 };
