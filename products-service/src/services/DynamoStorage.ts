@@ -3,6 +3,7 @@ import { Product } from "../models/Product";
 
 export interface Storage {
     save(product: Product): Promise<Product>
+    update(productId: string, product: Product);
 }
 
 export class DynamoStorage implements Storage {
@@ -19,6 +20,28 @@ export class DynamoStorage implements Storage {
         }).promise();
 
         return product
+    }
+
+    async update(productId: string, product: Product) {
+        console.log('productId', productId, ' into svc ', product);
+
+        await this.dynamo.update({
+            TableName: this.table,
+            Key: {
+                'productId': productId,
+                'companyId': '1001'
+            },
+            UpdateExpression: 'set #field_name = :name, description = :description, price = :price',
+            ExpressionAttributeValues: {
+                ':name' : product.name,
+                ':description' : product.description,
+                ':price' : product.price
+            },
+            ExpressionAttributeNames:{
+                "#field_name": "name"
+            },
+            ReturnValues:"UPDATED_NEW"
+        }).promise()
     }
 
 }

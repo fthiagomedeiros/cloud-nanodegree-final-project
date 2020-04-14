@@ -10,7 +10,7 @@ export const handler = middy(async (_event, _context) => {
   const newProduct: CreateProductRequest = JSON.parse(_event.body);
   const product = await createProduct(newProduct);
 
-  return new ApiResponse().successResponse(200, 'item', product);
+  return new ApiResponse().successResponse(201, 'item', product);
 });
 
 handler.use(cors());

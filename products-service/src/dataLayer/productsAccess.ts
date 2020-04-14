@@ -17,6 +17,7 @@ export class ProductAccess {
 
     async updateProduct(productId: string, product: Product): Promise<Product> {
         console.log('update product ', productId, ' with data ', product );
+        await this.database.update(productId, product);
         return product
     }
 
