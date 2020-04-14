@@ -1,12 +1,16 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
 import 'source-map-support/register';
+import { CreateProductRequest } from "../requests/CreateProductRequest";
+import { createProduct } from '../businessLogic/product'
 
-export const handler: APIGatewayProxyHandler = async (event, _context) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless Webpack (Typescript) v1.0! Your function executed successfully!',
-      input: event,
-    }, null, 2),
-  };
-}
+import * as middy from 'middy'
+import { cors } from 'middy/middlewares'
+import { ApiResponse } from "../response/ApiResponse";
+
+export const handler = middy(async (_event, _context) => {
+  const newProduct: CreateProductRequest = JSON.parse(_event.body);
+  const product = await createProduct(newProduct);
+
+  return new ApiResponse().successResponse(200, 'item', product);
+});
+
+handler.use(cors());
