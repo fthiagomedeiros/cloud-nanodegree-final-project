@@ -19,6 +19,9 @@ custom:
       - name: CreateProductRequest
         contentType: application/json
         schema: ${file(validator/create-product-request.json)}
+      - name: UpdateProductRequest
+        contentType: application/json
+        schema: ${file(validator/update-product-request.json)}
 
 
 plugins:
@@ -42,7 +45,7 @@ provider:
 
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    PRODUCT_TABLE: Products-${self:provider.stage}
+    PRODUCT_TABLE: ProductsById-${self:provider.stage}
     PRODUCTS_IMAGES_BUCKET: products-images-ufp-${self:provider.stage}
 
   custom:
@@ -82,6 +85,28 @@ functions:
           - s3:PutObject
         Resource: arn:aws:s3:::${self:provider.environment.PRODUCTS_IMAGES_BUCKET}/*
 
+  UpdateProductById:
+    handler: src/lambda/updateProduct.handler
+    events:
+      - http:
+          method: patch
+          path: products/{productId}
+          cors: true
+          reqValidatorName: RequestBodyValidator
+          documentation:
+            summary: Update a new product
+            description: Update a new product
+            requestModels:
+              'application/json': UpdateProductRequest
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: !GetAtt ProductsDynamoDBTable.Arn
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource: arn:aws:s3:::${self:provider.environment.PRODUCTS_IMAGES_BUCKET}/*
 
 resources:
   Resources:
@@ -99,14 +124,14 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: companyId
-            AttributeType: S
           - AttributeName: productId
+            AttributeType: S
+          - AttributeName: companyId
             AttributeType: S
         KeySchema:
-          - AttributeName: companyId
-            KeyType: HASH
           - AttributeName: productId
+            KeyType: HASH
+          - AttributeName: companyId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.PRODUCT_TABLE}
