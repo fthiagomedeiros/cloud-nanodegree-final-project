@@ -108,9 +108,22 @@ functions:
           - s3:PutObject
         Resource: arn:aws:s3:::${self:provider.environment.PRODUCTS_IMAGES_BUCKET}/*
 
+  DeleteProductById:
+    handler: src/lambda/deleteProduct.handler
+    events:
+      - http:
+          method: delete
+          path: products/{productId}
+          cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
+        Resource: !GetAtt ProductsDynamoDBTable.Arn
+
+
 resources:
   Resources:
-
     RequestBodyValidator:
       Type: AWS::ApiGateway::RequestValidator
       Properties:

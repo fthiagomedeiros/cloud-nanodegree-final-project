@@ -21,6 +21,11 @@ export class ProductAccess {
         return product
     }
 
+    async deleteProduct(productId: string) {
+        console.log('delete product ', productId);
+        await this.database.delete(productId);
+    }
+
 }
 
 

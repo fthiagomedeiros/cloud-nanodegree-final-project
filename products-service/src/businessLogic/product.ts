@@ -30,3 +30,7 @@ export async function updateProduct(
         price: updateProductRequest.price
     });
 }
+
+export async function deleteProduct(productId: string) {
+    return await productAccess.deleteProduct(productId);
+}
