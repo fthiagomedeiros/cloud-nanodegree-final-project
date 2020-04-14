@@ -18,6 +18,10 @@ export async function createProduct(
     });
 }
 
+export async function getProducts() {
+    return await productAccess.getProducts();
+}
+
 export async function updateProduct(
     productId: string,
     updateProductRequest: UpdateProductRequest): Promise<Product> {

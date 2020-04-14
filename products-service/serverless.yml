@@ -90,6 +90,19 @@ functions:
           - s3:PutObject
         Resource: arn:aws:s3:::${self:provider.environment.PRODUCTS_IMAGES_BUCKET}/*
 
+  GetProducts:
+    handler: src/lambda/getProducts.handler
+    events:
+      - http:
+          method: get
+          path: products
+          cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+        Resource: !GetAtt ProductsDynamoDBTable.Arn
+
   UpdateProductById:
     handler: src/lambda/updateProduct.handler
     events:
