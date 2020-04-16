@@ -11,4 +11,11 @@ export class ApiResponse {
         }
     }
 
+    message(statusCode: number, message: string): APIGatewayProxyResult {
+        return {
+            statusCode: statusCode,
+            body: message
+        }
+    }
+
 }
