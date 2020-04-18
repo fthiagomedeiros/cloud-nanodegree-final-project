@@ -1,10 +1,11 @@
 import * as AWS from "aws-sdk";
-import { Product } from "../models/Product";
+import {Product} from "../models/Product";
 
 export interface Storage {
     save(product: Product): Promise<Product>
     update(productId: string, product: Product)
     delete(productId: string)
+    get();
 }
 
 export class DynamoStorage implements Storage {
@@ -55,6 +56,13 @@ export class DynamoStorage implements Storage {
                 'companyId': '1001'
             }
         }).promise();
+    }
+
+    async get() : Promise<Product[]> {
+        const result = await this.dynamo.scan({
+            TableName: this.table
+        }).promise();
+        return result.Items as Product[]
     }
 
 }
