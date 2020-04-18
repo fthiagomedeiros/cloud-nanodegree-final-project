@@ -10,7 +10,7 @@ export async function createProduct(
     createProductRequest: CreateProductRequest): Promise<Product> {
 
     return await productAccess.createProduct({
-        productId: uuid.v4(),
+        id: uuid.v4(),
         companyId: "1001",
         name: createProductRequest.name,
         description: createProductRequest.description,
@@ -27,7 +27,7 @@ export async function updateProduct(
     updateProductRequest: UpdateProductRequest): Promise<Product> {
 
     return await productAccess.updateProduct(productId, {
-        productId: productId,
+        id: productId,
         companyId: "1001",
         name: updateProductRequest.name,
         description: updateProductRequest.description,

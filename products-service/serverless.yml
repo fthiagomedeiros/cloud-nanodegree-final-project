@@ -45,7 +45,7 @@ provider:
 
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    PRODUCT_TABLE: ProductsById-${self:provider.stage}
+    PRODUCT_TABLE: Products-${self:provider.stage}
     PRODUCTS_IMAGES_BUCKET: products-images-ufp-${self:provider.stage}
 
   custom:
@@ -174,12 +174,12 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: productId
+          - AttributeName: id
             AttributeType: S
           - AttributeName: companyId
             AttributeType: S
         KeySchema:
-          - AttributeName: productId
+          - AttributeName: id
             KeyType: HASH
           - AttributeName: companyId
             KeyType: RANGE

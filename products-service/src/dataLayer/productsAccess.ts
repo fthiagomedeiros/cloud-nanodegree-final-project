@@ -11,7 +11,7 @@ export class ProductAccess {
 
     async createProduct(product: Product): Promise<Product> {
         await this.database.save(product);
-        product.urlForUpload = this.fileStorage.generateUploadUrl(product.productId);
+        product.urlForUpload = this.fileStorage.generateUploadUrl(product.id);
         return product
     }
 

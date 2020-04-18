@@ -1,6 +1,6 @@
 export interface Product {
+    id: string
     companyId: string
-    productId: string
     name: string
     description: string
     price: bigint
