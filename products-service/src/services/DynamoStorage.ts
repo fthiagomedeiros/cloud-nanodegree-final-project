@@ -58,10 +58,11 @@ export class DynamoStorage implements Storage {
         }).promise();
     }
 
-    async get() {
-        return await this.dynamo.scan({
+    async get() : Promise<Product[]> {
+        const result = await this.dynamo.scan({
             TableName: this.table
-        }).promise()
+        }).promise();
+        return result.Items as Product[]
     }
 
 }

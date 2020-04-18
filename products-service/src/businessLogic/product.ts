@@ -18,7 +18,7 @@ export async function createProduct(
     });
 }
 
-export async function getProducts() {
+export async function getProducts(): Promise<Product[]> {
     return await productAccess.getProducts();
 }
 

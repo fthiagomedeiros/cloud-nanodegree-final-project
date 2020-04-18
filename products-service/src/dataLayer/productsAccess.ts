@@ -15,7 +15,7 @@ export class ProductAccess {
         return product
     }
 
-    async getProducts() {
+    async getProducts(): Promise<Product[]> {
         return await this.database.get();
     }
 
