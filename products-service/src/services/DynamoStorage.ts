@@ -52,7 +52,7 @@ export class DynamoStorage implements Storage {
         return await this.dynamo.delete({
             TableName: this.table,
             Key: {
-                'productId': productId,
+                'id': productId,
                 'companyId': '1001'
             }
         }).promise();
