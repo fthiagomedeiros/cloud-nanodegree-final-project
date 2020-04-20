@@ -69,7 +69,7 @@ functions:
       - Effect: Allow
         Action:
           - ssm:GetParameters
-        Resource: 'arn:aws:ssm:us-east-1:{AWS::AccountId}:parameter/autho/secret'
+        Resource: 'arn:aws:ssm:us-east-1:*:parameter/autho/secret'
 
   CreateProduct:
     handler: src/lambda/createProduct.handler
