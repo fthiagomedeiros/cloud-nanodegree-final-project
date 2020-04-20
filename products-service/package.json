@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Products Service",
   "dependencies": {
+    "jsonwebtoken": "^8.5.1",
     "middy": "^0.34.0",
     "source-map-support": "^0.5.10",
     "uuid": "^7.0.3"

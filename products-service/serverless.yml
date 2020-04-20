@@ -47,6 +47,7 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     PRODUCT_TABLE: Products-${self:provider.stage}
     PRODUCTS_IMAGES_BUCKET: products-images-ufp-${self:provider.stage}
+    AUTH0_SECRET: _________AUTH_0_SECRET______________
 
   custom:
     serverless-offline:

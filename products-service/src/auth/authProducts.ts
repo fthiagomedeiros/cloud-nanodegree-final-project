@@ -4,27 +4,30 @@ import {
     APIGatewayTokenAuthorizerHandler
 } from 'aws-lambda'
 
-function verifyToken(authorizationToken: string) {
+import { verify } from 'jsonwebtoken'
+import { JwtToken } from "./JwtToken";
+
+const secret = process.env.AUTH0_SECRET;
+
+function verifyToken(authorizationToken: string): JwtToken {
     if (!authorizationToken)
         throw new Error('No Auth Header');
 
     const split = authorizationToken.split(' ');
     const token = split[1];
 
-    if (token != '123')
-        throw new Error('Invalid Token')
-
-    //Token is valid
+    console.log(secret);
+    return verify(token, secret) as JwtToken;
 }
 
 export const handler: APIGatewayTokenAuthorizerHandler = async (event: APIGatewayTokenAuthorizerEvent): Promise<APIGatewayAuthorizerResult> => {
     console.log('Token type: ', event.authorizationToken);
 
     try {
-        verifyToken(event.authorizationToken);
-        console.log("User authorized ", event.authorizationToken);
+        const decodedToken = verifyToken(event.authorizationToken);
+        console.log("User authorized ", decodedToken.sub);
         return {
-            principalId: "decodedToken.sub",
+            principalId: decodedToken.sub,
             policyDocument: {
                 Version: '2012-10-17',
                 Statement: [
@@ -39,7 +42,7 @@ export const handler: APIGatewayTokenAuthorizerHandler = async (event: APIGatewa
     } catch (e) {
         console.log('Unauthorized ', event.authorizationToken);
         return {
-            principalId: 'decodedToken.sub',
+            principalId: 'no_valid_user',
             policyDocument: {
                 Version: '2012-10-17',
                 Statement: [
