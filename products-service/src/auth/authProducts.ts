@@ -30,8 +30,6 @@ export const handler: APIGatewayTokenAuthorizerHandler = async (event: APIGatewa
     }).promise().then(data => data.Parameters.length ? data.Parameters[0].Value :
         Promise.reject(new Error(`SSM Parameter is not set.`)));
 
-    console.log('Secret GOT >>>>', secret);
-
     try {
         const decodedToken = verifyToken(event.authorizationToken, secret);
         console.log("User authorized ", decodedToken.sub);
