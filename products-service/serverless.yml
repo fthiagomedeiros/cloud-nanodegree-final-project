@@ -97,6 +97,7 @@ functions:
           method: get
           path: products
           cors: true
+          authorizer: Auth
     iamRoleStatements:
       - Effect: Allow
         Action:
