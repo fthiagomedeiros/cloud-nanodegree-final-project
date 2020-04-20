@@ -65,6 +65,11 @@ functions:
 
   Auth:
     handler: src/auth/authProducts.handler
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - ssm:GetParameters
+        Resource: 'arn:aws:ssm:us-east-1:*:parameter/autho/secret'
 
   CreateProduct:
     handler: src/lambda/createProduct.handler
@@ -97,6 +102,7 @@ functions:
           method: get
           path: products
           cors: true
+          authorizer: Auth
     iamRoleStatements:
       - Effect: Allow
         Action:

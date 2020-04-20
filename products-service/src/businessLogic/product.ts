@@ -7,11 +7,12 @@ import {UpdateProductRequest} from "../requests/UpdateProductRequest";
 const productAccess = new ProductAccess();
 
 export async function createProduct(
+    userId: string,
     createProductRequest: CreateProductRequest): Promise<Product> {
 
     return await productAccess.createProduct({
         id: uuid.v4(),
-        companyId: "1001",
+        companyId: userId,
         name: createProductRequest.name,
         description: createProductRequest.description,
         price: createProductRequest.price
