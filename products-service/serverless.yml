@@ -47,7 +47,6 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     PRODUCT_TABLE: Products-${self:provider.stage}
     PRODUCTS_IMAGES_BUCKET: products-images-ufp-${self:provider.stage}
-    AUTH0_SECRET: _________AUTH_0_SECRET______________
 
   custom:
     serverless-offline:
@@ -66,6 +65,11 @@ functions:
 
   Auth:
     handler: src/auth/authProducts.handler
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - ssm:GetParameters
+        Resource: 'arn:aws:ssm:us-east-1:{AWS::AccountId}:parameter/autho/secret'
 
   CreateProduct:
     handler: src/lambda/createProduct.handler

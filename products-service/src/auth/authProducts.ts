@@ -6,10 +6,11 @@ import {
 
 import { verify } from 'jsonwebtoken'
 import { JwtToken } from "./JwtToken";
+import * as AWS from 'aws-sdk';
 
-const secret = process.env.AUTH0_SECRET;
+const ssm = new AWS.SSM();
 
-function verifyToken(authorizationToken: string): JwtToken {
+function verifyToken(authorizationToken: string, secret: string): JwtToken {
     if (!authorizationToken)
         throw new Error('No Auth Header');
 
@@ -23,8 +24,16 @@ function verifyToken(authorizationToken: string): JwtToken {
 export const handler: APIGatewayTokenAuthorizerHandler = async (event: APIGatewayTokenAuthorizerEvent): Promise<APIGatewayAuthorizerResult> => {
     console.log('Token type: ', event.authorizationToken);
 
+    const secret = await ssm.getParameters({
+        Names: ['/autho/secret'],
+        WithDecryption: true,
+    }).promise().then(data => data.Parameters.length ? data.Parameters[0].Value :
+        Promise.reject(new Error(`SSM Parameter is not set.`)));
+
+    console.log('Secret GOT >>>>', secret);
+
     try {
-        const decodedToken = verifyToken(event.authorizationToken);
+        const decodedToken = verifyToken(event.authorizationToken, secret);
         console.log("User authorized ", decodedToken.sub);
         return {
             principalId: decodedToken.sub,
