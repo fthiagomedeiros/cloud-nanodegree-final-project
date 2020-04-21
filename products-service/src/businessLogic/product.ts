@@ -19,8 +19,8 @@ export async function createProduct(
     });
 }
 
-export async function getProducts(): Promise<Product[]> {
-    return await productAccess.getProducts();
+export async function getProductsBy(userId: string): Promise<Product[]> {
+    return await productAccess.getProducts(userId);
 }
 
 export async function updateProduct(

@@ -15,8 +15,8 @@ export class ProductAccess {
         return product
     }
 
-    async getProducts(): Promise<Product[]> {
-        return await this.database.get();
+    async getProducts(userId: string): Promise<Product[]> {
+        return await this.database.get(userId);
     }
 
     async updateProduct(productId: string, product: Product): Promise<Product> {
