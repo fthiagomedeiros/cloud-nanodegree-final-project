@@ -4,7 +4,7 @@ import {Product} from "../models/Product";
 export interface Storage {
     save(product: Product): Promise<Product>
     update(productId: string, product: Product)
-    delete(productId: string)
+    delete(userId: string, productId: string)
     get();
 }
 
@@ -46,14 +46,14 @@ export class DynamoStorage implements Storage {
         }).promise()
     }
 
-    async delete(productId: string) {
+    async delete(userId: string, productId: string) {
         console.log('Deleting ', productId);
 
         return await this.dynamo.delete({
             TableName: this.table,
             Key: {
                 'id': productId,
-                'companyId': '1001'
+                'companyId': userId
             }
         }).promise();
     }

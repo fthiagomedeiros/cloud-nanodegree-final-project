@@ -36,6 +36,6 @@ export async function updateProduct(
     });
 }
 
-export async function deleteProduct(productId: string) {
-    return await productAccess.deleteProduct(productId);
+export async function deleteProduct(userId: string, productId: string) {
+    return await productAccess.deleteProduct(userId, productId);
 }
