@@ -53,9 +53,12 @@ export class DynamoStorage implements Storage {
         return await this.dynamo.delete({
             TableName: this.table,
             Key: {
-                'id': productId,
-                'companyId': userId
-            }
+                'id': productId
+            },
+            ExpressionAttributeValues: {
+                ':companyId': userId
+            },
+            ConditionExpression: "companyId = :companyId",
         }).promise();
     }
 
