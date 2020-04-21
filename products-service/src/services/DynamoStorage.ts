@@ -5,14 +5,15 @@ export interface Storage {
     save(product: Product): Promise<Product>
     update(productId: string, product: Product)
     delete(userId: string, productId: string)
-    get();
+    get(userId: string);
 }
 
 export class DynamoStorage implements Storage {
 
     constructor(
         private readonly dynamo = createClient(),
-        private readonly table = process.env.PRODUCT_TABLE) {
+        private readonly table = process.env.PRODUCT_TABLE,
+        private readonly productIndex = process.env.PRODUCT_TABLE_INDEX) {
     }
 
     async save(product: Product): Promise<Product> {
@@ -58,9 +59,16 @@ export class DynamoStorage implements Storage {
         }).promise();
     }
 
-    async get() : Promise<Product[]> {
-        const result = await this.dynamo.scan({
-            TableName: this.table
+    async get(userId: string) : Promise<Product[]> {
+        console.log('Getting all Todos for the logged user ', userId);
+
+        const result = await this.dynamo.query({
+            TableName: this.table,
+            IndexName: this.productIndex,
+            KeyConditionExpression: 'companyId = :companyId',
+            ExpressionAttributeValues:{
+                ':companyId': userId
+            }
         }).promise();
         return result.Items as Product[]
     }
