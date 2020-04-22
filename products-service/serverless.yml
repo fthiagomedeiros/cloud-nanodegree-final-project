@@ -30,10 +30,16 @@ plugins:
   - serverless-iam-roles-per-function
   - serverless-aws-documentation
   - serverless-reqvalidator-plugin
+  - serverless-plugin-tracing
   - serverless-offline
 
 
 provider:
+
+  tracing:
+    lambda: true
+    apiGateway: true
+
   name: aws
   runtime: nodejs12.x
 

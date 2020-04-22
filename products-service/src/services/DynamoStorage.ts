@@ -1,5 +1,8 @@
 import * as AWS from "aws-sdk";
 import {Product} from "../models/Product";
+import * as AWSXRay from 'aws-xray-sdk'
+
+const XAWS = AWSXRay.captureAWS(AWS);
 
 export interface Storage {
     save(product: Product): Promise<Product>
@@ -79,13 +82,6 @@ export class DynamoStorage implements Storage {
 }
 
 function createClient() {
-    if (process.env.IS_OFFLINE) {
-        return new AWS.DynamoDB.DocumentClient({
-            region: 'localhost',
-            endpoint: 'http://localhost:8000'
-        })
-    }
-
-    return new AWS.DynamoDB.DocumentClient()
+    return new XAWS.DynamoDB.DocumentClient();
 }
 
