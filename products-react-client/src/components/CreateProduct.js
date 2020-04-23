@@ -3,6 +3,7 @@ import serializeForm from 'form-serialize'
 import { postProduct } from '../api/ProductsApi'
 import * as bootstrap from '../bootstrap.min.css'
 import ImageInput from "./ImageInput";
+import { Link } from 'react-router-dom'
 
 class CreateProduct extends Component {
 
@@ -10,7 +11,9 @@ class CreateProduct extends Component {
         name: '',
         description: '',
         price: 0,
-        file: ''
+        file: '',
+        submitted: false,
+        submitting: false
     };
 
     handleSubmit = (e) => {
@@ -18,10 +21,15 @@ class CreateProduct extends Component {
         const values = serializeForm(e.target, { hash: true });
         console.log(values);
 
-        const response = postProduct({
+        this.setState({submitting: true})
+
+        postProduct({
             name: this.state.name,
             description: this.state.description,
             price: this.state.price}, this.state.file, this.props.auth.getToken());
+
+        this.setState({submitted: true})
+
     };
 
     handleNameChange = (event) => {
@@ -74,9 +82,14 @@ class CreateProduct extends Component {
                         <br />
 
                         <button>Register product</button>
+
+                        {this.state.submitted === true && (
+                            <Link to="/products">The product {this.state.name} has been submitted</Link>)}
+
                     </div>
 
                 </form>
+
             </div>
         );
     }

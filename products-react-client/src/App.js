@@ -50,6 +50,13 @@ class App extends Component {
                                 ( <Redirect to='/' /> )}
                     />
 
+                    <Route
+                        path="/create"
+                        render={props => this.auth.isAuthenticated()
+                            ? <CreateProduct auth={this.auth} {...props} />
+                            : this.auth.login()}
+                    />
+
                     <Route path='/public' component={Public}/>
 
                     <Route
@@ -59,12 +66,6 @@ class App extends Component {
                             : this.auth.login()}
                     />
 
-                    <Route
-                        path="/create"
-                        render={props => this.auth.isAuthenticated()
-                            ? <CreateProduct auth={this.auth} {...props} />
-                            : this.auth.login()}
-                    />
 
                 </div>
             </>
