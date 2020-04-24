@@ -12,8 +12,7 @@ class CreateProduct extends Component {
         description: '',
         price: 0,
         file: '',
-        submitted: false,
-        submitting: false
+        loading: false
     };
 
     handleSubmit = (e) => {
@@ -21,14 +20,18 @@ class CreateProduct extends Component {
         const values = serializeForm(e.target, { hash: true });
         console.log(values);
 
-        this.setState({submitting: true})
+        this.setState({loading: true})
 
         postProduct({
             name: this.state.name,
             description: this.state.description,
             price: this.state.price}, this.state.file, this.props.auth.getToken());
 
-        this.setState({submitted: true})
+        setTimeout(() => {
+            this.setState({loading: true})
+        })
+
+        this.setState({loading: false})
 
     };
 
@@ -46,8 +49,6 @@ class CreateProduct extends Component {
 
     handlerFileSelectedCallback = (file) => {
         this.setState({ file : file})
-        console.log('selected file content : ' + this.state.file);
-        console.log('works ' + this.state.file)
     };
 
 
@@ -55,40 +56,43 @@ class CreateProduct extends Component {
         return (
             <div>
                 <h1>Create new product form</h1>
-                <form onSubmit={this.handleSubmit} className='create-product-form'>
 
-                    <ImageInput
-                        className="create-product-input"
-                        name="productUrl"
-                        maxHeight={64}
-                        handlerFileSelectedCallback={this.handlerFileSelectedCallback}
-                    />
+                {!this.state.loading && (
+                    <form onSubmit={this.handleSubmit} className='create-product-form'>
 
-                    <div className='create-product-details' style={{width: "1024px"}}>
+                        <ImageInput
+                            className="create-product-input"
+                            name="productUrl"
+                            maxHeight={64}
+                            handlerFileSelectedCallback={this.handlerFileSelectedCallback}
+                        />
 
-                        <label>Name</label>
-                        <input type='text' className="form-control" value={this.state.name}
-                               onChange={this.handleNameChange} placeholder='Name' />
-                        <br />
+                        <div className='create-product-details' style={{width: "1024px"}}>
 
-                        <label>Description</label>
-                        <input  type='text' className="form-control" value={this.state.description}
-                               onChange={this.handleDescriptionChange} placeholder='Description' />
-                        <br />
+                            <label>Name</label>
+                            <input type='text' className="form-control" value={this.state.name}
+                                   onChange={this.handleNameChange} placeholder='Name' />
+                            <br />
 
-                        <label>Price</label>
-                        <input type='number' className="form-control" step="0.1" name='price' value={this.state.price}
-                               onChange={this.handlePriceChange} placeholder='Price' />
-                        <br />
+                            <label>Description</label>
+                            <input  type='text' className="form-control" value={this.state.description}
+                                    onChange={this.handleDescriptionChange} placeholder='Description' />
+                            <br />
 
-                        <button>Register product</button>
+                            <label>Price</label>
+                            <input type='number' className="form-control" step="0.1" name='price' value={this.state.price}
+                                   onChange={this.handlePriceChange} placeholder='Price' />
+                            <br />
 
-                        {this.state.submitted === true && (
-                            <Link to="/products">The product {this.state.name} has been submitted</Link>)}
+                            <button>Register product</button>
+                        </div>
+                    </form>
+                )}
 
-                    </div>
 
-                </form>
+                {this.state.loading && (
+                    <Link to="/products">The product {this.state.name} has been submitted</Link>
+                )}
 
             </div>
         );
