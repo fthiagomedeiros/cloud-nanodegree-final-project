@@ -9,6 +9,7 @@ import GetProducts from "./components/GetProducts";
 import Public from "./components/Public";
 import Private from "./components/Private";
 import CreateProduct from "./components/CreateProduct";
+import EditProduct from "./components/EditProduct";
 
 class App extends Component {
 
@@ -54,6 +55,14 @@ class App extends Component {
                         path="/create"
                         render={props => this.auth.isAuthenticated()
                             ? <CreateProduct auth={this.auth} {...props} />
+                            : this.auth.login()}
+                    />
+
+                    <Route
+                        exact
+                        path="/edit/:id"
+                        render={props => this.auth.isAuthenticated()
+                            ? <EditProduct auth={this.auth} {...props} />
                             : this.auth.login()}
                     />
 
