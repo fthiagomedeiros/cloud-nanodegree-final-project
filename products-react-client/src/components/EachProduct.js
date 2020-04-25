@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom'
 
 class EachProduct extends Component {
 
@@ -19,6 +20,9 @@ class EachProduct extends Component {
                             <p>{product.description}</p>
                             <p>Price: {product.price}</p>
                         </div>
+
+
+                        <Link to={`/edit/${product.id}`} className='product-edit'>Edit Product</Link>
 
                         <button onClick={() => onDeleteProduct(product)} className='product-remove'>
                             Remove
