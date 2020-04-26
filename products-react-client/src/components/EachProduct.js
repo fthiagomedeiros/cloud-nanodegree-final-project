@@ -22,7 +22,12 @@ class EachProduct extends Component {
                         </div>
 
 
-                        <Link to={`/edit/${product.id}`} className='product-edit'>Edit Product</Link>
+                        <Link to={{pathname: `/edit/${product.id}`,
+                            state: { id: product.id,
+                                     name: product.name,
+                                     description: product.description,
+                                     price: product.price }
+                        }} className='product-edit'>Edit Product</Link>
 
                         <button onClick={() => onDeleteProduct(product)} className='product-remove'>
                             Remove

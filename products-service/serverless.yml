@@ -51,7 +51,7 @@ provider:
 
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    PRODUCT_TABLE: Products-${self:provider.stage}
+    PRODUCT_TABLE: ProductsId-${self:provider.stage}
     PRODUCT_TABLE_INDEX: ProductUserIndex-${self:provider.stage}
     PRODUCTS_IMAGES_BUCKET: products-images-ufp-${self:provider.stage}
 
@@ -195,6 +195,8 @@ resources:
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+          - AttributeName: companyId
+            KeyType: RANGE
         GlobalSecondaryIndexes:
           - IndexName: ${self:provider.environment.PRODUCT_TABLE_INDEX}
             KeySchema:
