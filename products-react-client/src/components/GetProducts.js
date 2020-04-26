@@ -44,7 +44,12 @@ class GetProducts extends Component {
     render() {
         return (
             <div>
-                <EachProduct products={this.state.items} onDeleteProduct={this.onDeleteProduct} />
+                {this.state.items.length !== 0 && (
+                    <EachProduct products={this.state.items} onDeleteProduct={this.onDeleteProduct} />
+                )}
+                {this.state.items.length === 0 && (
+                    <div className='active'>No items available</div>
+                )}
             </div>
         );
     }
