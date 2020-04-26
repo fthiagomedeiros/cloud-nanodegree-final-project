@@ -34,8 +34,8 @@ export class DynamoStorage implements Storage {
         await this.dynamo.update({
             TableName: this.table,
             Key: {
-                'productId': productId,
-                'companyId': '1001'
+                'id': productId,
+                'companyId': product.companyId
             },
             UpdateExpression: 'set #field_name = :name, description = :description, price = :price',
             ExpressionAttributeValues: {
@@ -56,12 +56,13 @@ export class DynamoStorage implements Storage {
         return await this.dynamo.delete({
             TableName: this.table,
             Key: {
-                'id': productId
-            },
-            ExpressionAttributeValues: {
-                ':companyId': userId
+                'id': productId,
+                'companyId': userId
             },
             ConditionExpression: "companyId = :companyId",
+            ExpressionAttributeValues: {
+                ":companyId": userId
+            }
         }).promise();
     }
 

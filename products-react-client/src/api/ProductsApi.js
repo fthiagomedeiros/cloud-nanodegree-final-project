@@ -10,6 +10,26 @@ export const getProducts = (token) =>
         return response;
     });
 
+export const putProduct = (signedUrl, image) => {
+    console.log(signedUrl);
+    const requestOptions = {
+        method: 'PUT',
+        headers: {'Content-Type': 'image/jpeg'},
+        body: image
+    };
+
+    fetch(signedUrl, requestOptions)
+        .then(response => {
+            if (response.ok) return true;
+            throw new Error(response.message);
+        }).then(response => {
+        if (response === true) {return 'OK'}
+        else { return response }
+    })
+
+};
+
+
 export const postProduct = (body, image, token) => {
     console.log('postProduct got here >>>> ' + image);
     const requestOptions = {
@@ -29,22 +49,7 @@ export const postProduct = (body, image, token) => {
 
 };
 
-export const putProduct = (signedUrl, image) => {
-    console.log(signedUrl);
-    const requestOptions = {
-        method: 'PUT',
-        headers: {'Content-Type': 'image/jpeg'},
-        body: image
-    };
-
-    fetch(signedUrl, requestOptions)
-        .then(response => {
-            if (response.ok) return true;
-            throw new Error(response.message);
-        }).then(response => {
-        if (response === true) {return 'OK'}
-        else { return response }
-    })
-
-};
+export const getProduct = (id) => {
+    console.log('id')
+}
 

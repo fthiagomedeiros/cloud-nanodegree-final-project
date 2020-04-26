@@ -24,12 +24,13 @@ export async function getProductsBy(userId: string): Promise<Product[]> {
 }
 
 export async function updateProduct(
+    userId: string,
     productId: string,
     updateProductRequest: UpdateProductRequest): Promise<Product> {
 
     return await productAccess.updateProduct(productId, {
         id: productId,
-        companyId: "1001",
+        companyId: userId,
         name: updateProductRequest.name,
         description: updateProductRequest.description,
         price: updateProductRequest.price
