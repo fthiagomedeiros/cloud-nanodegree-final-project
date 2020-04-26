@@ -1,14 +1,3 @@
-const headers = {
-    'Accept': 'application/json',
-};
-
-export const getProducts = (token) =>
-    fetch(`/products`, { headers: headers }).then(response => {
-        if (response.ok) return response.json();
-        throw new Error('Network response was not ok')
-    }).then(response => {
-        return response;
-    });
 
 export const putProduct = (signedUrl, image) => {
     console.log(signedUrl);
@@ -39,6 +28,7 @@ export const postProduct = (body, image, token) => {
         body: JSON.stringify(body)
     };
 
+    console.log(JSON.stringify(body))
     fetch('/products', requestOptions)
         .then(response => {
             if (response.ok) return response.json();
@@ -49,7 +39,21 @@ export const postProduct = (body, image, token) => {
 
 };
 
-export const getProduct = (id) => {
-    console.log('id')
+export const patchProduct = (id, body, token) => {
+    const requestOptions = {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
+    };
+
+    console.log(JSON.stringify(body))
+    fetch(`/products/${id}`, requestOptions)
+        .then(response => {
+            if (response.ok) return response.json();
+            throw new Error(response.message);
+        }).then(response => {
+            console.log(response)
+    })
 }
 

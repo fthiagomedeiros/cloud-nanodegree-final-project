@@ -26,7 +26,8 @@ class EachProduct extends Component {
                             state: { id: product.id,
                                      name: product.name,
                                      description: product.description,
-                                     price: product.price }
+                                     price: product.price,
+                                     token: this.props.token}
                         }} className='product-edit'>Edit Product</Link>
 
                         <button onClick={() => onDeleteProduct(product)} className='product-remove'>

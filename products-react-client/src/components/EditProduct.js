@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import serializeForm from "form-serialize";
-import {postProduct} from "../api/ProductsApi";
 import EdiText from 'react-editext'
+import { patchProduct } from "../api/ProductsApi";
+import serializeForm from "form-serialize";
 
 class EditProduct extends Component {
 
@@ -9,11 +9,12 @@ class EditProduct extends Component {
         id: this.props.match.params.id,
         name: this.props.location.state.name,
         description: this.props.location.state.description,
-        price: this.props.location.state.price
+        price: this.props.location.state.price,
+        token: this.props.location.state.token
     }
 
     componentDidMount() {
-        console.log('componentDidMount')
+        console.log('Now we have a token ' + this.state.token)
     }
 
     handleUpdate = (e) => {
@@ -21,11 +22,10 @@ class EditProduct extends Component {
         const values = serializeForm(e.target, { hash: true });
         console.log(values);
 
-        postProduct({
+        patchProduct(this.state.id, {
             name: this.state.name,
             description: this.state.description,
-            price: this.state.price}, this.state.file, this.props.auth.getToken());
-
+            price: Number(this.state.price)}, this.state.token);
     };
 
     handleEditName = val => {
@@ -67,9 +67,8 @@ class EditProduct extends Component {
                 />
 
                 <br></br>
-                <br></br>
-                <br></br>
-                <button>Submit update</button>
+
+                <button  onClick={this.handleUpdate}>Submit update</button>
             </div>
         );
     }
