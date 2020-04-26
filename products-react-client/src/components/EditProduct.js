@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import serializeForm from "form-serialize";
 import {postProduct} from "../api/ProductsApi";
+import EdiText from 'react-editext'
 
 class EditProduct extends Component {
 
@@ -27,11 +28,48 @@ class EditProduct extends Component {
 
     };
 
-    render() {
+    handleEditName = val => {
+        this.setState({name: val})
+    }
 
+    handleEditDescription = val => {
+        this.setState({description: val})
+    }
+
+    handleEditPricing = val => {
+        this.setState({price: val})
+    }
+
+    render() {
         return (
             <div>
-                {this.state.id}
+                <h3>Editing item >>>>> {this.state.id}</h3>
+                <label>Name</label>
+                <EdiText
+                    type='text'
+                    value={this.state.name}
+                    onSave={this.handleEditName}
+                />
+
+                <label>Description</label>
+                <EdiText
+                    type='text'
+                    value={this.state.description}
+                    onSave={this.handleEditDescription}
+                />
+
+                <label>Pricing</label>
+                <EdiText
+                    type='number'
+                    step='0.1'
+                    value={this.state.price}
+                    onSave={this.handleEditPricing}
+                />
+
+                <br></br>
+                <br></br>
+                <br></br>
+                <button>Submit update</button>
             </div>
         );
     }
