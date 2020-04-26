@@ -10,7 +10,8 @@ class EditProduct extends Component {
         name: this.props.location.state.name,
         description: this.props.location.state.description,
         price: this.props.location.state.price,
-        token: this.props.location.state.token
+        token: this.props.location.state.token,
+        updated: false
     }
 
     componentDidMount() {
@@ -26,6 +27,10 @@ class EditProduct extends Component {
             name: this.state.name,
             description: this.state.description,
             price: Number(this.state.price)}, this.state.token);
+
+        setTimeout(() => {
+            this.setState({updated: true})
+        })
     };
 
     handleEditName = val => {
@@ -43,6 +48,10 @@ class EditProduct extends Component {
     render() {
         return (
             <div>
+                {this.state.updated && (
+                    <div className='active'>Item has been updated</div>
+                )}
+
                 <h3>Editing item >>>>> {this.state.id}</h3>
                 <label>Name</label>
                 <EdiText
