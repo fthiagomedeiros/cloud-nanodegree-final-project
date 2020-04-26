@@ -45,7 +45,8 @@ class GetProducts extends Component {
         return (
             <div>
                 {this.state.items.length !== 0 && (
-                    <EachProduct products={this.state.items} onDeleteProduct={this.onDeleteProduct} />
+                    <EachProduct products={this.state.items} onDeleteProduct={this.onDeleteProduct}
+                                 token={this.props.auth.getToken()} />
                 )}
                 {this.state.items.length === 0 && (
                     <div className='active'>No items available</div>
