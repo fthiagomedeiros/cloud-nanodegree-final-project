@@ -1,0 +1,240 @@
+{
+	"info": {
+		"_postman_id": "5092fa92-eff3-46b5-9c16-13119de2e8c3",
+		"name": "Products-Service AWS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnaXZlbl9uYW1lIjoiVGhpYWdvIiwiZmFtaWx5X25hbWUiOiJNZWRlaXJvcyIsIm5pY2tuYW1lIjoiZnRoaWFnb21lZGVpcm9zIiwibmFtZSI6IlRoaWFnbyBNZWRlaXJvcyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQU9oMTRHano2dlpvZUVhOFFuMnRLWmc4TDBKMGdBVkVTZWppNUFSNEdtRzAiLCJsb2NhbGUiOiJwdC1CUiIsInVwZGF0ZWRfYXQiOiIyMDIwLTA0LTI1VDE0OjQ5OjIwLjEwOFoiLCJlbWFpbCI6ImZ0aGlhZ29tZWRlaXJvc0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9mdGhpYWdvbWVkZWlyb3MuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTExMTEwNjA1OTU0NzIwMDQzNzg0IiwiYXVkIjoiYVJMYkJvd0FvVWYzY3pWZmtEVzJ0M002cnV2M0Z1dWMiLCJpYXQiOjE1ODc4MjYxNjAsImV4cCI6MTU4ODI1ODE2MCwiYXRfaGFzaCI6IllXOGtUT0ZRUUhXYzE0LWNJamNMM3ciLCJub25jZSI6IkZwRDdRTXI0N1AzLkI4MGFOOXM5Z2JpMTlsWXByMDI3In0.OAcLra2Fq1UciyOdyjEUrc7AOEbEAlnWTfkwVPKCup0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Smart TV LED 50 Samsung 50RU7100 Ultra HD 4K\",\n\t\"description\": \"This is the TV description shown to buyers\",\n\t\"price\": 1199.99\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apiudacity.fthiago.com/products",
+					"protocol": "https",
+					"host": [
+						"apiudacity",
+						"fthiago",
+						"com"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnaXZlbl9uYW1lIjoiVGhpYWdvIiwiZmFtaWx5X25hbWUiOiJNZWRlaXJvcyIsIm5pY2tuYW1lIjoiZnRoaWFnb21lZGVpcm9zIiwibmFtZSI6IlRoaWFnbyBNZWRlaXJvcyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQU9oMTRHano2dlpvZUVhOFFuMnRLWmc4TDBKMGdBVkVTZWppNUFSNEdtRzAiLCJsb2NhbGUiOiJwdC1CUiIsInVwZGF0ZWRfYXQiOiIyMDIwLTA0LTI1VDE0OjQ5OjIwLjEwOFoiLCJlbWFpbCI6ImZ0aGlhZ29tZWRlaXJvc0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9mdGhpYWdvbWVkZWlyb3MuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTExMTEwNjA1OTU0NzIwMDQzNzg0IiwiYXVkIjoiYVJMYkJvd0FvVWYzY3pWZmtEVzJ0M002cnV2M0Z1dWMiLCJpYXQiOjE1ODc4MjYxNjAsImV4cCI6MTU4ODI1ODE2MCwiYXRfaGFzaCI6IllXOGtUT0ZRUUhXYzE0LWNJamNMM3ciLCJub25jZSI6IkZwRDdRTXI0N1AzLkI4MGFOOXM5Z2JpMTlsWXByMDI3In0.OAcLra2Fq1UciyOdyjEUrc7AOEbEAlnWTfkwVPKCup0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://apiudacity.fthiago.com/products",
+					"protocol": "https",
+					"host": [
+						"apiudacity",
+						"fthiago",
+						"com"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get public",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://apiudacity.fthiago.com/public",
+					"protocol": "https",
+					"host": [
+						"apiudacity",
+						"fthiago",
+						"com"
+					],
+					"path": [
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get private",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnaXZlbl9uYW1lIjoiVGhpYWdvIiwiZmFtaWx5X25hbWUiOiJNZWRlaXJvcyIsIm5pY2tuYW1lIjoiZnRoaWFnb21lZGVpcm9zIiwibmFtZSI6IlRoaWFnbyBNZWRlaXJvcyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQU9oMTRHano2dlpvZUVhOFFuMnRLWmc4TDBKMGdBVkVTZWppNUFSNEdtRzAiLCJsb2NhbGUiOiJwdC1CUiIsInVwZGF0ZWRfYXQiOiIyMDIwLTA0LTI1VDE0OjQ5OjIwLjEwOFoiLCJlbWFpbCI6ImZ0aGlhZ29tZWRlaXJvc0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9mdGhpYWdvbWVkZWlyb3MuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTExMTEwNjA1OTU0NzIwMDQzNzg0IiwiYXVkIjoiYVJMYkJvd0FvVWYzY3pWZmtEVzJ0M002cnV2M0Z1dWMiLCJpYXQiOjE1ODc4MjYxNjAsImV4cCI6MTU4ODI1ODE2MCwiYXRfaGFzaCI6IllXOGtUT0ZRUUhXYzE0LWNJamNMM3ciLCJub25jZSI6IkZwRDdRTXI0N1AzLkI4MGFOOXM5Z2JpMTlsWXByMDI3In0.OAcLra2Fq1UciyOdyjEUrc7AOEbEAlnWTfkwVPKCup0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://apiudacity.fthiago.com/private",
+					"protocol": "https",
+					"host": [
+						"apiudacity",
+						"fthiago",
+						"com"
+					],
+					"path": [
+						"private"
+					]
+				},
+				"description": "Include Authorization Bearer token and this endpoint will work"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product by Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnaXZlbl9uYW1lIjoiVGhpYWdvIiwiZmFtaWx5X25hbWUiOiJNZWRlaXJvcyIsIm5pY2tuYW1lIjoiZnRoaWFnb21lZGVpcm9zIiwibmFtZSI6IlRoaWFnbyBNZWRlaXJvcyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQU9oMTRHano2dlpvZUVhOFFuMnRLWmc4TDBKMGdBVkVTZWppNUFSNEdtRzAiLCJsb2NhbGUiOiJwdC1CUiIsInVwZGF0ZWRfYXQiOiIyMDIwLTA0LTI1VDE0OjQ5OjIwLjEwOFoiLCJlbWFpbCI6ImZ0aGlhZ29tZWRlaXJvc0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9mdGhpYWdvbWVkZWlyb3MuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTExMTEwNjA1OTU0NzIwMDQzNzg0IiwiYXVkIjoiYVJMYkJvd0FvVWYzY3pWZmtEVzJ0M002cnV2M0Z1dWMiLCJpYXQiOjE1ODc4MjYxNjAsImV4cCI6MTU4ODI1ODE2MCwiYXRfaGFzaCI6IllXOGtUT0ZRUUhXYzE0LWNJamNMM3ciLCJub25jZSI6IkZwRDdRTXI0N1AzLkI4MGFOOXM5Z2JpMTlsWXByMDI3In0.OAcLra2Fq1UciyOdyjEUrc7AOEbEAlnWTfkwVPKCup0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"TOALHA MICROFIBRA\",\n\t\"description\": \"No additional data\",\n\t\"price\": 99\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apiudacity.fthiago.com/products/410002d6-f342-4c1f-9810-ba97b2701643",
+					"protocol": "https",
+					"host": [
+						"apiudacity",
+						"fthiago",
+						"com"
+					],
+					"path": [
+						"products",
+						"410002d6-f342-4c1f-9810-ba97b2701643"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product By Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnaXZlbl9uYW1lIjoiVGhpYWdvIiwiZmFtaWx5X25hbWUiOiJNZWRlaXJvcyIsIm5pY2tuYW1lIjoiZnRoaWFnb21lZGVpcm9zIiwibmFtZSI6IlRoaWFnbyBNZWRlaXJvcyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQU9oMTRHano2dlpvZUVhOFFuMnRLWmc4TDBKMGdBVkVTZWppNUFSNEdtRzAiLCJsb2NhbGUiOiJwdC1CUiIsInVwZGF0ZWRfYXQiOiIyMDIwLTA0LTI1VDE0OjQ5OjIwLjEwOFoiLCJlbWFpbCI6ImZ0aGlhZ29tZWRlaXJvc0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9mdGhpYWdvbWVkZWlyb3MuYXV0aDAuY29tLyIsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTExMTEwNjA1OTU0NzIwMDQzNzg0IiwiYXVkIjoiYVJMYkJvd0FvVWYzY3pWZmtEVzJ0M002cnV2M0Z1dWMiLCJpYXQiOjE1ODc4MjYxNjAsImV4cCI6MTU4ODI1ODE2MCwiYXRfaGFzaCI6IllXOGtUT0ZRUUhXYzE0LWNJamNMM3ciLCJub25jZSI6IkZwRDdRTXI0N1AzLkI4MGFOOXM5Z2JpMTlsWXByMDI3In0.OAcLra2Fq1UciyOdyjEUrc7AOEbEAlnWTfkwVPKCup0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://apiudacity.fthiago.com/products/410002d6-f342-4c1f-9810-ba97b2701643",
+					"protocol": "https",
+					"host": [
+						"apiudacity",
+						"fthiago",
+						"com"
+					],
+					"path": [
+						"products",
+						"410002d6-f342-4c1f-9810-ba97b2701643"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "788f7ec2-ef30-4247-bc32-a51803942f20",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "218906df-9dd7-4291-bbf3-9189f554bca6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "1e91de83-cf93-43b5-a3e7-06a0a9dd3529",
+			"key": "apiId",
+			"value": "v5eus0vldl",
+			"type": "string"
+		},
+		{
+			"id": "047c5150-eb33-4d6d-92d7-3e858b391e6d",
+			"key": "env",
+			"value": "dev",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

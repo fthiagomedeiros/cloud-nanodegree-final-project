@@ -1,7 +1,12 @@
 # cloud-nanodegree-final-project
-Cloud Nanodegree Final Project - Serverless
+Approach: __Serverless__
 
 An ecommerce must have a product registration service API.
-This project created an API to register new product, delete a product, update a product and read products list for a logged user
+This project allows an API logged user to manage their product list.
+
+the endpoints provided are located in 
+Products-Service AWS.postman_collection
+
+
 
 
