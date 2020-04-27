@@ -69,6 +69,3 @@ Data is stored in a table with a composite key. OK
 Scan operation is not used to read data from a database. OK
 ```
 
-
-Additional features
-
