@@ -57,6 +57,10 @@ class CreateProduct extends Component {
             <div>
                 <h1>Create new product form</h1>
 
+                <h3>Please, have a look in validators files placed located in</h3>
+                <p>https://github.com/fthiagomedeiros/cloud-nanodegree-final-project/tree/master/products-service/validator</p>
+                <p>The error happened because the  input in form does not follow validators. Thank you</p>
+
                 {!this.state.loading && (
                     <form onSubmit={this.handleSubmit} className='create-product-form'>
 
