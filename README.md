@@ -14,6 +14,15 @@ These validations only are provided to the backend and not provided at React Fro
 
 The system use flow is provided into [screenshot folder](https://github.com/fthiagomedeiros/cloud-nanodegree-final-project/tree/dev/docs/screenshots/screenshots)
 
+
+### Running the client
+
+To run the react project, just type into the folder 'products-react-client'
+```node
+npm run start
+``` 
+
+
 ### Features implemented
 
 1. The user is able to CREATE, UPDATE and DELETE products.
@@ -23,3 +32,43 @@ The system use flow is provided into [screenshot folder](https://github.com/fthi
 
 The code is split into multiple layers separating business logic from I/O related code.
 The Hexagonal pattern is used to provide a separation of concerns through the code.
+
+
+### Project Rubric Requirements
+
+__(Option 2): Functionality__
+
+
+```coffeescript
+The application allows users to create, update, delete items OK
+The application allows users to upload a file. OK
+The application only displays items for a logged in user. OK
+Authentication is implemented and does not allow unauthenticated access. OK
+```
+
+__(Option 2):Codebase__
+
+```coffeescript
+The code is split into multiple layers separating business logic from I/O related code. OK
+Code is implemented using async/await and Promises without using callbacks. OK
+```
+
+__(Option 2):Best practices__
+
+```coffeescript
+All resources in the application are defined in the "serverless.yml" file OK
+Each function has its own set of permissions. OK
+Application has sufficient monitoring. OK
+HTTP requests are validated OK
+```
+
+__(Option 2):Architecture__
+
+```coffeescript
+Data is stored in a table with a composite key. OK
+Scan operation is not used to read data from a database. OK
+```
+
+
+Additional features
+
