@@ -9,22 +9,237 @@ custom:
     webpackConfig: ./webpack.config.js
     includeModules: true
 
-# Add the serverless-webpack plugin
+  documentation:
+    api:
+      info:
+        version: 1.0.0
+        title: products-service
+        description: serverless service for products
+    models:
+      - name: CreateProductRequest
+        contentType: application/json
+        schema: ${file(validator/create-product-request.json)}
+      - name: UpdateProductRequest
+        contentType: application/json
+        schema: ${file(validator/update-product-request.json)}
+
+
 plugins:
   - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-iam-roles-per-function
+  - serverless-aws-documentation
+  - serverless-reqvalidator-plugin
+  - serverless-plugin-tracing
+  - serverless-offline
+
 
 provider:
+
+  tracing:
+    lambda: true
+    apiGateway: true
+
   name: aws
   runtime: nodejs12.x
+
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+
   apiGateway:
     minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    PRODUCT_TABLE: ProductsId-${self:provider.stage}
+    PRODUCT_TABLE_INDEX: ProductUserIndex-${self:provider.stage}
+    PRODUCTS_IMAGES_BUCKET: products-images-ufp-${self:provider.stage}
+
+  custom:
+    serverless-offline:
+      port: 3003
+
+    dynamodb:
+      start:
+        port: 8000
+        inMemory: true
+        migrate: true
+      stages:
+        - dev
+
 
 functions:
-  hello:
-    handler: handler.hello
+
+  Auth:
+    handler: src/auth/authProducts.handler
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - ssm:GetParameters
+        Resource: 'arn:aws:ssm:us-east-1:*:parameter/autho/secret'
+
+  CreateProduct:
+    handler: src/lambda/createProduct.handler
+    events:
+      - http:
+          method: post
+          path: products
+          cors: true
+          authorizer: Auth
+          reqValidatorName: RequestBodyValidator
+          documentation:
+            summary: Create a new product
+            description: Create a new product
+            requestModels:
+              'application/json': CreateProductRequest
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: !GetAtt ProductsDynamoDBTable.Arn
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource: arn:aws:s3:::${self:provider.environment.PRODUCTS_IMAGES_BUCKET}/*
+
+  GetProducts:
+    handler: src/lambda/getProducts.handler
     events:
       - http:
           method: get
-          path: hello
+          path: products
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PRODUCT_TABLE}/index/${self:provider.environment.PRODUCT_TABLE_INDEX}
+
+  UpdateProductById:
+    handler: src/lambda/updateProduct.handler
+    events:
+      - http:
+          method: patch
+          path: products/{productId}
+          cors: true
+          authorizer: Auth
+          reqValidatorName: RequestBodyValidator
+          documentation:
+            summary: Update a new product
+            description: Update a new product
+            requestModels:
+              'application/json': UpdateProductRequest
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: !GetAtt ProductsDynamoDBTable.Arn
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource: arn:aws:s3:::${self:provider.environment.PRODUCTS_IMAGES_BUCKET}/*
+
+  DeleteProductById:
+    handler: src/lambda/deleteProduct.handler
+    events:
+      - http:
+          method: delete
+          path: products/{productId}
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
+        Resource: !GetAtt ProductsDynamoDBTable.Arn
+
+  PublicEndpoint:
+    handler: src/lambda/public.handler
+    events:
+      - http:
+          method: get
+          path: public
+          cors: true
+
+  PrivateEndpoint:
+    handler: src/lambda/private.handler
+    events:
+      - http:
+          method: get
+          path: private
+          cors: true
+          authorizer: Auth
+
+
+resources:
+  Resources:
+    RequestBodyValidator:
+      Type: AWS::ApiGateway::RequestValidator
+      Properties:
+        Name: 'request-body-validator'
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        ValidateRequestBody: true
+        ValidateRequestParameters: false
+
+    ProductsDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: companyId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          - AttributeName: companyId
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: ${self:provider.environment.PRODUCT_TABLE_INDEX}
+            KeySchema:
+              - AttributeName: companyId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.PRODUCT_TABLE}
+
+    ProductsImagesBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.PRODUCTS_IMAGES_BUCKET}
+        CorsConfiguration:
+          CorsRules:
+            - AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - HEAD
+              MaxAge: 3000
+
+    ProductsImagesBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref ProductsImagesBucket
+        PolicyDocument:
+          {
+            "Version": "2008-10-17",
+            "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": "*",
+              "Action": "s3:GetObject",
+              "Resource": "arn:aws:s3:::${self:provider.environment.PRODUCTS_IMAGES_BUCKET}/*"
+            }
+            ]
+          }
+
+
