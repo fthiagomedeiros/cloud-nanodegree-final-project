@@ -7,7 +7,7 @@ import {getUserId} from "../utils/utils";
 
 export const handler = middy(async (_event, _context) => {
     const userId = getUserId(_event);
-    return new ApiResponse().message(200, `{"message": "You are logged as ${userId}"}`);
+    return new ApiResponse().message(200, `{"message": "You are logged as ${userId}. Thank you!"}`);
 });
 
 handler.use(cors());
