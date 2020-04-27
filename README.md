@@ -9,7 +9,7 @@ This project allows an API logged user to manage their product list.
 the endpoints provided are located in [Products-Service AWS.postman_collection](https://github.com/fthiagomedeiros/cloud-nanodegree-final-project/blob/dev/docs/screenshots/Products-Service%20AWS.postman_collection.json).
 You can import this collection into Postman client and use it.
 
-The requests must follow the validations provided as JSONSchemas located in [validator folder](https://github.com/fthiagomedeiros/cloud-nanodegree-final-project/tree/dev/docs/screenshots/products-service/validator)
+The requests must follow the validations provided as JSONSchemas located in [validator folder](https://github.com/fthiagomedeiros/cloud-nanodegree-final-project/tree/master/products-service/validator)
 These validations only are provided to the backend and not provided at React Frontend built (once the course focuses are in the backend service).
 
 The system use flow is provided into [screenshot folder](https://github.com/fthiagomedeiros/cloud-nanodegree-final-project/tree/master/screenshots)
