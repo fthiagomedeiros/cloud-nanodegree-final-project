@@ -1,5 +1,9 @@
 # cloud-nanodegree-final-project
-Approach: __Serverless__
+- Approach: __Serverless__
+- Patterns: I have implemented separation of concerns using Port and Adapters pattern. [Hexagonal Architecture](https://www.thinktocode.com/2018/07/19/ports-and-adapters-architecture/)
+- As the focus is not the frontend, I have developed a basic react application.
+- Clean Code and best practices patterns are used.
+- AWS Services: CloudFront, APIGateway, DynamoDB, AWS Lambda using serverless framework 
 
 An ecommerce must have a product registration service API.
 This project allows an API logged user to manage their product list.
